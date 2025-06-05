@@ -16,8 +16,7 @@ resource "azurerm_service_plan" "main" {
   location            = azurerm_resource_group.main.location
 
   os_type  = "Windows"
-  sku_name = "B1" # Basic tier - adjust as needed (F1 for free, S1 for standard, P1v2 for production)
-
+  sku_name = "B1"
   tags = {
     Environment = var.environment
     Project     = var.project_name
@@ -90,14 +89,6 @@ resource "azurerm_mssql_database" "main" {
     Environment = var.environment
     Project     = var.project_name
   }
-}
-
-# SQL Server Firewall Rule - Allow Azure services
-resource "azurerm_mssql_firewall_rule" "azure_services" {
-  name             = "AllowAzureServices"
-  server_id        = azurerm_mssql_server.main.id
-  start_ip_address = "0.0.0.0"
-  end_ip_address   = "0.0.0.0"
 }
 
  resource "azurerm_mssql_firewall_rule" "my_ip" {
