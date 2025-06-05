@@ -34,7 +34,7 @@ resource "azurerm_windows_web_app" "main" {
     application_stack {
       dotnet_version = "v8.0"
     }
-    
+
     always_on = false
   }
 
@@ -78,12 +78,12 @@ resource "azurerm_mssql_server" "main" {
 
 # SQL Database
 resource "azurerm_mssql_database" "main" {
-  name           = "sqldb-${var.project_name}-${var.environment}"
-  server_id      = azurerm_mssql_server.main.id
-  collation      = "SQL_Latin1_General_CP1_CI_AS"
-  license_type   = "LicenseIncluded"
-  max_size_gb    = 2
-  sku_name       = "Basic"
+  name         = "sqldb-${var.project_name}-${var.environment}"
+  server_id    = azurerm_mssql_server.main.id
+  collation    = "SQL_Latin1_General_CP1_CI_AS"
+  license_type = "LicenseIncluded"
+  max_size_gb  = 2
+  sku_name     = "Basic"
 
   tags = {
     Environment = var.environment
@@ -91,12 +91,12 @@ resource "azurerm_mssql_database" "main" {
   }
 }
 
- resource "azurerm_mssql_firewall_rule" "my_ip" {
-   name             = "DeveloperAccess"
-   server_id        = azurerm_mssql_server.main.id
-   start_ip_address = "143.58.240.101" # Josh.Lees
-   end_ip_address   = "143.58.240.101" # Josh.Lees
- }
+resource "azurerm_mssql_firewall_rule" "my_ip" {
+  name             = "DeveloperAccess"
+  server_id        = azurerm_mssql_server.main.id
+  start_ip_address = "143.58.240.101" # Josh.Lees
+  end_ip_address   = "143.58.240.101" # Josh.Lees
+}
 
 resource "azurerm_application_insights" "main" {
   name                = "appi-${var.project_name}-${var.environment}"
@@ -122,8 +122,8 @@ resource "azurerm_windows_web_app_slot" "staging" {
   }
 
   app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE"         = "1"
-    "APPINSIGHTS_INSTRUMENTATIONKEY"   = azurerm_application_insights.main.instrumentation_key
+    "WEBSITE_RUN_FROM_PACKAGE"              = "1"
+    "APPINSIGHTS_INSTRUMENTATIONKEY"        = azurerm_application_insights.main.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.main.connection_string
   }
 
