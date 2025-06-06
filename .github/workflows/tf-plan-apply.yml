@@ -81,10 +81,9 @@ jobs:
     # Save plan to artifacts  
     - name: Publish Terraform Plan
       uses: actions/upload-artifact@v4
-      working-directory: .
       with:
         name: tfplan
-        path: ./Terraform/tfplan
+        path: tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -155,7 +154,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: ./Terraform
+        path: .
 
     # Terraform Apply
     - name: Terraform Apply
