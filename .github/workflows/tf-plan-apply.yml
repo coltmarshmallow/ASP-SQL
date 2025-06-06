@@ -69,7 +69,6 @@ jobs:
       run: |
         export exitcode=0
         terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
-
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         
         if [ $exitcode -eq 1 ]; then
@@ -82,9 +81,10 @@ jobs:
     # Save plan to artifacts  
     - name: Publish Terraform Plan
       uses: actions/upload-artifact@v4
+      working-directory: .
       with:
         name: tfplan
-        path: tfplan
+        path: ./Terraform/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -136,7 +136,7 @@ jobs:
     defaults:
       run:
         working-directory: ./Terraform
-
+    
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -155,7 +155,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: .
+        path: ./Terraform
 
     # Terraform Apply
     - name: Terraform Apply
