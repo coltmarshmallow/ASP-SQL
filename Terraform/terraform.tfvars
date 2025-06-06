@@ -1,5 +1,5 @@
 project_name       = "myaspnetapp"
 environment        = "development"
-location           = "West EU"
+location           = "uksouth"
 sql_admin_username = "sqladmin"
 sql_admin_password = "thisIsNotHowYouStorePasswords789!"
