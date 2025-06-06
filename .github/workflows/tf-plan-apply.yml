@@ -68,7 +68,7 @@ jobs:
       id: tf-plan
       run: |
         export exitcode=0
-        terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
+        terraform plan -detailed-exitcode -no-color -out ./Terraform/tfplan || export exitcode=$?
 
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
         
@@ -90,7 +90,7 @@ jobs:
     - name: Create String Output
       id: tf-plan-string
       run: |
-        TERRAFORM_PLAN=$(terraform show -no-color tfplan)
+        TERRAFORM_PLAN=$(terraform show -no-color ./Terraform/tfplan)
         
         delimiter="$(openssl rand -hex 8)"
         echo "summary<<${delimiter}" >> $GITHUB_OUTPUT
@@ -155,7 +155,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: ./Terraform
+        path: ./Terraform/tfplan
 
     # Terraform Apply
     - name: Terraform Apply
