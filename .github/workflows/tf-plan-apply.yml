@@ -84,7 +84,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: tfplan
-        path: tfplan
+        path: ./Terraform/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -133,7 +133,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: [terraform-plan]
-    
+    defaults:
+      run:
+        working-directory: ./Terraform
+
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -152,6 +155,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
+        path: ./Terraform
 
     # Terraform Apply
     - name: Terraform Apply
